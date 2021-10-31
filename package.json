@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "",
+    "start": "nodemon Server/index.js",
     "dev": "nodemon Server/index.js"
   },
   "author": "",
