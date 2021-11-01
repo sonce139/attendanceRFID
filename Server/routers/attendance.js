@@ -10,7 +10,6 @@ router.post('/attendances', async (req, res) => {
         res.status(201).send(attendance)
     } catch (err) {
         res.status(400).send(err)
-        console.log(err)
     }
 })  
 
