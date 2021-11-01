@@ -11,13 +11,11 @@ const studentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    classesEnrolled: [{
-        class_id: {
-            type: String,
-            required: true,
-            unique: true
-        }
-    }],
+    classesEnrolled: {
+        type: Array,
+        required: true,
+        default: []
+    },
     password: {
         type: String,
         required: true,
@@ -54,15 +52,15 @@ const studentSchema = new mongoose.Schema({
 //     return student
 // }
 
-studentSchema.pre('save', (next) => {
+studentSchema.pre('save', function (next) {
     const student = this
-    
+
     if (student.isModified('password')) {
         const salt = crypto.randomBytes(16).toString("hex")
         student.password = crypto.pbkdf2Sync(student.password, salt, 1000, 64, `sha512`).toString(`hex`);
         console.log(student.password)
     }
-    
+
     next()
 })
 

@@ -1,19 +1,26 @@
 #include <ESP8266WiFi.h>
 #include <Arduino_JSON.h>
 #include <WiFiClientSecure.h>
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 const char* ssid = "LHThanh";
 const char* password = "14chuvanan";
 
-const String host = "attendance-rfid.herokuapp.com";
 const int httpsPort = 443;
+const String host = "attendance-rfid.herokuapp.com";
 const char fingerprint[] PROGMEM = "0c 39 35 5a 61 4b 02 6a 75 c6 1c 86 43 8e 61 86 07 8d 64 ae";
 
 void setup() {
+  // init step
   Serial.begin(115200);
+  lcd.begin(16,2);
+  lcd.init();
+  lcd.backlight();
 
-  WiFi.begin(ssid, password);
-  
+  // connect WIFI
+  WiFi.begin(ssid, password); 
   Serial.println("Connecting");
   while(WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -23,31 +30,36 @@ void setup() {
   Serial.println("");
   Serial.print("Connected to WiFi network with IP Address: ");
   Serial.println(WiFi.localIP());
+
+  // lcd print
+  lcd.setCursor(0, 0);
+  lcd.print("Attendance RFID");
 }
 
 void loop() {
-  String payload = getStudent("19520158");
-  JSONVar student = JSON.parse(payload);
-
-  if (JSON.typeof(student) == "undifined") {
-    Serial.println("Student not exists");
-  }
-
-  Serial.println(student["name"]);
+//  String payload = getStudent("19520158");
+//  JSONVar student = JSON.parse(payload);
+//
+//  if (JSON.typeof(student) == "undifined") {
+//    Serial.println("Student not exists");
+//  }
+//
+//  Serial.println(student["name"]);
+//  
+//  for (int i = 0; i < student["classesEnrolled"].length(); i++) {
+//    Serial.println(student["classesEnrolled"][i]["class_id"]);
+//  }
+//  
+//  payload = postAttendance("CE224.M11", "19520158");
+//  JSONVar attendance = JSON.parse(payload);
+//
+//  if (JSON.typeof(attendance) == "undifined") {
+//    Serial.println("Attendance failed");
+//  }
+//  
+//  Serial.println("Attendance succesed");
+//  delay(500000);
   
-  for (int i = 0; i < student["classesEnrolled"].length(); i++) {
-    Serial.println(student["classesEnrolled"][i]["class_id"]);
-  }
-  
-  payload = postAttendance("CE224.M11", "19520158");
-  JSONVar attendance = JSON.parse(payload);
-
-  if (JSON.typeof(attendance) == "undifined") {
-    Serial.println("Attendance failed");
-  }
-  
-  Serial.println("Attendance succesed");
-  delay(500000);
 }
 
 String getStudent(String student_id) {
