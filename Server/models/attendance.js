@@ -9,20 +9,19 @@ const attendanceSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    device_id: {
+    time: {
         type: String,
         required: true
-    },
-    time: {
-        type: Date,
-        required: true
-    },
-    owner: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'device'
     }
 })
+
+// attendanceSchema.pre('save', (next) => {
+//     const attendance = this
+//     const anotherAttendance = Attendance.find({ class_id: attendance.class_id, student_id: attendance.studen_id})
+    
+    
+//     next()
+// })
 
 const Attendance = mongoose.model('Attendance', attendanceSchema)
 module.exports = Attendance

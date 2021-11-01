@@ -2,7 +2,7 @@ const express = require('express')
 const Student = require('../models/student')
 const router = new express.Router()
 
-router.post('/students', async function (req, res) {
+router.post('/students', async (req, res) => {
     const student = new Student(req.body)
     
     try {
@@ -14,7 +14,7 @@ router.post('/students', async function (req, res) {
     }
 })
 
-router.get('/students', async function (req, res) {
+router.get('/students', async (req, res) => {
     try {
         const student = await Student.find({})
         res.send(student)
@@ -23,7 +23,7 @@ router.get('/students', async function (req, res) {
     }
 })
 
-router.get('/students/:id', async function (req, res) {
+router.get('/students/:id', async (req, res) => {
     const _id = req.params.id
 
     try {

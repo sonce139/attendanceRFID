@@ -11,11 +11,6 @@ const studentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    card_id: {
-        type: String,
-        required: true,
-        unique: true
-    },
     classesEnrolled: [{
         class_id: {
             type: String,
@@ -59,7 +54,7 @@ const studentSchema = new mongoose.Schema({
 //     return student
 // }
 
-studentSchema.pre('save', function (next) {
+studentSchema.pre('save', (next) => {
     const student = this
     
     if (student.isModified('password')) {
