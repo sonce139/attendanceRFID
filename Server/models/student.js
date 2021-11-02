@@ -58,7 +58,6 @@ studentSchema.pre('save', function (next) {
     if (student.isModified('password')) {
         const salt = crypto.randomBytes(16).toString("hex")
         student.password = crypto.pbkdf2Sync(student.password, salt, 1000, 64, `sha512`).toString(`hex`);
-        console.log(student.password)
     }
 
     next()
