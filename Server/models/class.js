@@ -1,27 +1,25 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 
-const classSchema = mongoose.Schema('Class', {
+const classSchema = mongoose.Schema("Class", {
     id: {
         type: String,
         required: true,
         unique: true
     },
-    name: {
+    subject: {
         type: String,
         required: true
     },
-    lecturer_id: {
-        type: String,
-        required: true
-    },
-    studentsEnrolled: [{
-        studnet_id: {
-            type: String,
-            required: true,
-            unique: true
-        }
-    }]
+    // lecturer_id: {
+    //     type: String,
+    //     required: true
+    // },
+    studentsEnrolled: {
+        type: Array,
+        required: true,
+        default: []
+    }
 })
 
-const Class = mongoose.model('Class', classSchema)
+const Class = mongoose.model("Class", classSchema)
 module.exports = Class
