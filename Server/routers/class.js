@@ -6,7 +6,7 @@ router.post("/classes", async function (req, res) {
     const Classes = new Class(req.body)
 
     try {
-        await Classes.save
+        await Classes.save()
         res.status(201).send(Classes)
     } catch (err) {
         res.send(400).send(err)
@@ -21,9 +21,18 @@ router.patch("/classes/:class_id/:student_id", async function (req, res) {
         const Classes = Class.findOne({ "id": class_id })
         Classes["studentEnrolled"].push(student_id)
 
-        await Classes.save
+        await Classes.save()
     } catch (err) {
         res.send(400).send(err)
+    }
+})
+
+router.get("/classes/", async function (req, res) {
+    try {
+        const Classes = await Class.find({})
+        res.send(Classes)
+    } catch (err) {
+        res.status(500).send(err)
     }
 })
 
