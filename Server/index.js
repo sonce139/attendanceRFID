@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(deviceRouter)
 app.use(studentRouter)
 app.use(attendanceRouter)
-app.use()
+app.use(classRouter)
 
 app.listen(port, () => {
     console.log("Server is up on port " + port)
