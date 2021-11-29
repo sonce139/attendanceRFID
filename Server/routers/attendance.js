@@ -1,8 +1,8 @@
-const express = require('express')
-const Attendance = require('../models/attendance')
+const express = require("express")
+const Attendance = require("../models/attendance")
 const router = new express.Router()
 
-router.post('/attendances', async (req, res) => {
+router.post("/attendances", async (req, res) => {
     const attendance = new Attendance(req.body)
     
     try {
@@ -11,9 +11,18 @@ router.post('/attendances', async (req, res) => {
     } catch (err) {
         res.status(400).send(err)
     }
-})  
+})
 
-router.get('/attendances/student/:id', async (req, res) => {
+router.get("/attendances", async function (req, res) {
+    try {
+        const attendances = Attendance.find({})
+        res.send(attendances)
+    } catch (err) {
+        res.status(500).send()
+    }
+})
+
+router.get("/attendances/student/:id", async function (req, res) {
     const _id = req.params.id
 
     try {
@@ -28,7 +37,7 @@ router.get('/attendances/student/:id', async (req, res) => {
     }
 })
 
-router.get('/attendances/class/:id', async (req, res) => {
+router.get("/attendances/class/:id", async function (req, res) {
     const _id = req.params.id
 
     try {
@@ -43,7 +52,7 @@ router.get('/attendances/class/:id', async (req, res) => {
     }
 })
 
-router.delete('/attendanes/:id', async (req, res) => {
+router.delete("/attendanes/:id", async function (req, res) {
     try {
         const user = await User.findByIdAndDelete(req.params.id)    
 
