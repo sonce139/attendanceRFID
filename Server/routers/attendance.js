@@ -15,7 +15,7 @@ router.post("/attendances", async (req, res) => {
 
 router.get("/attendances", async function (req, res) {
     try {
-        const attendances = Attendance.find({})
+        const attendances = await Attendance.find({})
         res.send(attendances)
     } catch (err) {
         res.status(500).send()
