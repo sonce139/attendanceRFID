@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RFID Attendance System</title>
+    <link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <header>
+      <h1>RFID Attendance System</h1>
+    </header>
+
+    <div class="main-page">
+      <div style="text-align: center; padding-top: 20px">
+
+        <label for="classes" style="font-weight: bold">Chọn lớp điểm danh:</label>
+        <select id="classes">
+          <option value="">Chọn lớp</option>
+          <option value="CE224.M11">CE224.M11 - Thiết kế HTN</option>
+          <option value="CE213.M11">CE213.M11 - Thiết kế hệ thống số với HDL</option>
+          <option value="CS106.M11">CS106.M11 - Trí tuệ nhân tạo</option>
+        </select>
+        <button id="submitButton" type="button">Submit</button>
+      </div>
+
+      <table style="width: 90%">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>MSSV</th> 
+            <th>Tên</th>
+            <th>Lớp</th>
+            <th>Thời gian</th>
+          </tr>
+        </thead>
+        <colgroup width="5%"></colgroup>
+        <colgroup width="20%"></colgroup>
+        <colgroup width="35%"></colgroup>
+        <colgroup width="20%"></colgroup>
+        <colgroup width="20%"></colgroup>
+        <tbody id="container"></tbody>
+      </table>
+    </div>
+
+    <footer>
+      <h5>
+        Nhóm 6 <br>
+        Lê Hoàng Minh - Phạm Công Huy - Trần Quốc Sơn - Phạm Thanh Lâm - Đào Công Nhật Tân
+      </h5>
+      
+      <img
+        src="https://rfthings.com.vn/wp-content/uploads/2019/12/Logo-RF-Things-Black.png"
+      />
+      <img
+        src="http://ceday.uit.edu.vn/wp-content/uploads/2020/07/cropped-LOGO-CE-stroke-v2.png"
+      />
+      <img 
+        src="https://tuoitre.uit.edu.vn/wp-content/uploads/2015/07/logo-uit.png"
+      />
+    </footer>
+    <script src="../js/index.js"></script>
+  </body>
+</html>
