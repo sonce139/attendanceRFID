@@ -5,13 +5,15 @@
 #include <Arduino_JSON.h>
 #include <WiFiClientSecure.h>
 #include "time.h"
+#include <AsyncElegantOTA.h>
+#include <ESPAsyncTCP.h>
+#include <ESPAsyncWebServer.h>
 
 #define RST_PIN         D0
 #define SS_PIN          D8
 #define BT_FORWARD      D4
 
-
-
+AsyncWebServer server(80);
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
@@ -43,7 +45,6 @@ String Class;
 int    pos = 0;
 
 //Chuyen lop
-
 void ICACHE_RAM_ATTR FORWARD_CLASS() {
   while ((digitalRead(BT_FORWARD) == 0));
   pos++;
@@ -69,18 +70,19 @@ void setup() {
   Serial.println("");
   Serial.print("Connected to WiFi network with IP Address: ");
   Serial.println(WiFi.localIP());
+  
+  AsyncElegantOTA.begin(&server, "19522142", "1");    // Start ElegantOTA
+  server.begin();
+  Serial.println("\nHTTP server started");
 
-
-   for (byte i = 0; i < 6; i++)
+  for (byte i = 0; i < 6; i++)
     key.keyByte[i] = 0xFF;
     
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
   String TimeUpdate();
   //Interrupt for forward class
   attachInterrupt(digitalPinToInterrupt(BT_FORWARD), FORWARD_CLASS, FALLING);
-
 }
-
 
 void loop() {
   mfrc522.PCD_Init();
@@ -96,32 +98,26 @@ void loop() {
   JSONVar student, attendance;
   String  payload;
   String student_id;
-
-
-
-
+  
   if ((student_id = ReadRFID()) == "" )
     return;
-
-
 
   //DOC DUOC MSSV
   sendLCD(STT::WAIT);
   payload = getStudent(student_id);
   student = JSON.parse(payload);
 
-  if (JSON.typeof(student) == "undefined") {                              //Neu sinh vien khong co tren database
+  if (JSON.typeof(student) == "undefined") {       //Neu sinh vien khong co tren database
     sendLCD(STT::INVALID_ID);
     return;
   }
 
-
-  if (!isValidClass(student)) {                       // Viet ham isValidClass, kiem tra class_id[index] co nam trong mang lop cua goi JSON
+  if (!isValidClass(student)) {     // Viet ham isValidClass, kiem tra class_id[index] co nam trong mang lop cua goi JSON
     sendLCD(STT::INVALID_CLASS);
     return;
   }
 
-  payload = postAttendance(Class_arr[pos], student_id);                                 //Diem danh tren web
+  payload = postAttendance(Class_arr[pos], student_id);       //Diem danh tren web
   attendance = JSON.parse(payload);
 
   //Serial.println("Uploading....");
@@ -143,7 +139,6 @@ String TimeUpdate() {
   return (String)asctime(timeinfo);
 }
 
-
 // Doc RFID
 String ReadRFID() {
   String returnID = "";
@@ -156,8 +151,6 @@ String ReadRFID() {
 
   if (status != MFRC522::STATUS_OK)
   {
-    //Serial.print("Authentication failed for Read: ");
-
     return returnID;
   }
 //  else
@@ -192,12 +185,10 @@ bool isValidClass(JSONVar student) {
       //Serial.println("Equal");
       return true;
     }
-
     //Serial.println("Don't compare") ;
   }
   return false;
 }
-
 
 String getStudent(String student_id) {
   String payload = "{}";
@@ -251,7 +242,6 @@ String postAttendance(String class_id, String student_id) {
   currenttime.trim();
   //Serial.print(currenttime);
 
-
   WiFiClientSecure httpsClient;
   httpsClient.setFingerprint(fingerprint);
   httpsClient.setTimeout(2000);
@@ -280,7 +270,6 @@ String postAttendance(String class_id, String student_id) {
       break;
     }
   }
-
   // receive data
   while (httpsClient.available()) {
     payload = httpsClient.readStringUntil('\n');
@@ -290,7 +279,6 @@ String postAttendance(String class_id, String student_id) {
   payload = payload.substring(1, payload.length() - 1);
   return payload;
 }
-
 
 void sendLCD(STT s) {
   switch (s) {
