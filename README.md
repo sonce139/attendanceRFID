@@ -1,6 +1,6 @@
 # CE224 - Embedded System Design
 ## Overview
-This is the final project of the CE224 - Embedded System Design.  
+This is the final project of the CE224 - Embedded System Design, which name is attendance system.  
 The system has the function of student attendance through student card. After scanning the card, attendance status will be displayed via LCD16x2, and attendance results will be displayed via webserver.
 <p align="center">
   <img width="460" height="300" src="https://scontent.xx.fbcdn.net/v/t1.15752-9/s320x320/263279186_170641265246242_8812481336949471079_n.png?_nc_cat=110&ccb=1-5&_nc_sid=aee45a&_nc_ohc=WkogxehIJsoAX-2LyIi&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=ccb09fe6331b17ec34e2acecdda9506a&oe=61D55905">
