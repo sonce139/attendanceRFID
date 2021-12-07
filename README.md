@@ -5,6 +5,7 @@ The system has the function of student attendance through student card. After sc
 <p align="center">
   <img width="460" height="300" src="https://scontent.xx.fbcdn.net/v/t1.15752-9/s320x320/263279186_170641265246242_8812481336949471079_n.png?_nc_cat=110&ccb=1-5&_nc_sid=aee45a&_nc_ohc=WkogxehIJsoAX-2LyIi&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=ccb09fe6331b17ec34e2acecdda9506a&oe=61D55905">
 </p>
+
 ## [Attendance](https://github.com/Le-M1nh/attendanceRFID/tree/master/AttendanceNode)
 The project included read card, send statuses to LCD, send data to database, OTA, interrupt. 
 - read card: ESP8266 reading card via module RC522 (using I2C).
